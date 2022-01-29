@@ -6,10 +6,33 @@ import 'element-plus/dist/index.css' // 引入所有样式
 // 引入 element-plus 组件
 import {
   ElButton,
+  ElTabs,
+  ElIcon,
+  ElTabPane,
+  ElForm,
+  ElFormItem,
+  ElInput,
+  ElCheckbox,
+  ElLink,
 } from "element-plus/lib/components"
+import {
+  UserFilled,
+  Iphone,
+} from "@element-plus/icons-vue"
 
 const components = [
   ElButton,
+  ElTabs,
+  ElIcon,
+  ElTabPane,
+  ElForm,
+  ElFormItem,
+  ElInput,
+  ElCheckbox,
+  ElLink,
+
+  UserFilled,
+  Iphone,
 ]
 
 const registerElementPlusCpn = {

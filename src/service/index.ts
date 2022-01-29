@@ -10,19 +10,19 @@ const lxRequest = new LXRequest({
       const token = 'hello'
       token && (config.headers!.Authorization = `Bearer ${token}`)
 
-      console.log('axios 实例请求成功时的拦截：', config)
+      // console.log('axios 实例请求成功时的拦截：', config)
       return config
     },
     requestInterceptorCatch(error) {
-      console.log('axios 实例请求失败时的拦截：', error)
+      // console.log('axios 实例请求失败时的拦截：', error)
       return error
     },
     responseInterceptor(result) {
-      console.log('axios 实例响应成功时的拦截：', result)
-      return result.data
+      // console.log('axios 实例响应成功时的拦截：', result)
+      return result
     },
     responseInterceptorCatch(error) {
-      console.log('axios 实例响应失败时的拦截：', error)
+      // console.log('axios 实例响应失败时的拦截：', error)
       return error
     },
   },

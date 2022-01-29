@@ -3,25 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import registerApp from "@/global"
-import lxRequest from "@/service"
-
-(async () => {
-  const result = await lxRequest.request({
-    url: '/home/multidata',
-    showLoading: true,
-    // interceptors: {
-    //   requestInterceptor(config) {
-    //     console.log('单独的请求成功拦截器')
-    //     return config
-    //   },
-    //   responseInterceptor(result) {
-    //     console.log('单独的响应成功拦截器')
-    //     return result.data
-    //   },
-    // },
-  })
-  console.log(result)
-})()
+import 'normalize.css'
+import '@/assets/css/index.scss'
 
 const app = createApp(App)
 app.use(store)

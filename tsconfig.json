@@ -1,31 +1,50 @@
 {
+  // 编译配置
   "compilerOptions": {
+    // 目标代码（ts -> es5/6/7）（由于本项目之后会使用 babel 来转化，因此这里不需要写 es5）
     "target": "esnext",
+    // 目标代码使用的模块化方案（commonjs、es module、cmd、amd），如果要适配多种模块化方案可以写 umd，由于之后会通过 babel 转化，因此可以写 esnext
     "module": "esnext",
+    // 开启严格检查
     "strict": true,
+    // 对 jsx 进行怎样的处理（jsx -> createElement/h），preserve 表示保留，即不进行任何处理
     "jsx": "preserve",
+    // 辅助的导入功能（对目标浏览器进行一些 polyfill 以适配当前采用的导入方案）
     "importHelpers": true,
+    // 按照 node 的方式去解析模块（即按照 node 的方式查找模块...）
     "moduleResolution": "node",
+    // 跳过一些库的类型检查
     "skipLibCheck": true,
+    // es module 和 commonjs 是否可混合使用
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    // 是否生成 js 映射文件
     "sourceMap": true,
+    // 文件路径在解析时的基本 url （。 表示基于文件当前所在路径来进行解析）
     "baseUrl": ".",
+    // 指定具体解析时使用的类型库（一般由上面的 target 所设置的目标代码的类型来决定，webpack-env 其内部自己做了一套配置）
     "types": [
       "webpack-env"
     ],
+    // 路径解析（只是为了在 ts 中不报错（且在编辑器中对别名有提示），可以理解对路径别名的 .d 声明，要让别名起效果，仍然需要配置 vue.config.js）
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"],
+      "assets/*": ["src/assets/*"],
+      "common/*": ["src/common/*"],
+      "global/*": ["src/global/*"],
+      "components/*": ["src/components/*"],
+      "service/*": ["src/service/*"],
+      "views/*": ["src/views/*"],
     },
+    // 指定在项目中使用哪些库的类型
     "lib": [
       "esnext",
       "dom",
       "dom.iterable",
       "scripthost"
-    ],
+    ]
   },
+  // 表示包含哪些文件需要进行 ts 的编译解析
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
@@ -33,6 +52,7 @@
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
+  // 表示排除哪些文件需要进行 ts 的编译解析（默认会对引用的库的所有文件进行解析，排除后只对引用的那部分进行解析）
   "exclude": [
     "node_modules"
   ]

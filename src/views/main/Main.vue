@@ -1,6 +1,5 @@
 <template>
-  <div id="home">
-    <ElButton type="primary">哈哈哈</ElButton>
+  <div id="main">
   </div>
 </template>
 
@@ -8,14 +7,14 @@
 </script>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue'  
 
 export default defineComponent({
-  name: 'Home',
+  name: 'main'
 })
 </script>
 
 <style lang="scss" scoped>
-#home {
+#main {
 }
 </style>
