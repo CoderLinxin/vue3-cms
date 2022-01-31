@@ -21,8 +21,8 @@ export const rules = {
       trigger: 'blur',
     },
     {
-      pattern: /^[a-z0-9]{10,16}$/,
-      message: '密码必须是10~16为字符~',
+      pattern: /^[a-z0-9]{5,}$/,
+      message: '密码必须为5个字符以上~',
       trigger: 'blur',
     },
   ],
@@ -30,5 +30,5 @@ export const rules = {
 
 // LoginAccount 组件暴露出来的对象类型
 export interface IAccountExposeType {
-  loginAction: (isKeepCode:boolean) => void
+  loginAction: (isKeepCode: boolean) => void
 }

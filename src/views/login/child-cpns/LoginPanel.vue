@@ -4,19 +4,20 @@
     <h2 class="title">后台管理系统</h2>
     <!--  登录界面  -->
     <el-tabs type="border-card"
-             :stretch="true">
-      <el-tab-pane>
+             :stretch="true"
+             v-model="currentTab">
+      <el-tab-pane name="account">
         <template #label>
           <span class="tab"><el-icon><user-filled/></el-icon> 账号登录</span>
         </template>
         <LoginAccount ref="accountRef"/>
       </el-tab-pane>
 
-      <el-tab-pane>
+      <el-tab-pane name="phone">
         <template #label>
           <span class="tab"><el-icon><iphone/></el-icon> 手机登录</span>
         </template>
-        <LoginPhone/>
+        <LoginPhone ref="phoneRef"/>
       </el-tab-pane>
     </el-tabs>
 
@@ -38,14 +39,28 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { IAccountExposeType } from "../config/account-config"
+import { IPhoneExposeType } from "../config/phone-config"
 import LoginAccount from './LoginAccount'
 import LoginPhone from './LoginPhone'
 
 const isKeepCode = ref(true) // 是否记住密码
-const accountRef = ref<IAccountExposeType>() // 拿到组件对象
+const currentTab = ref<'account' | 'phone'>('account')
+
+const accountRef = ref<IAccountExposeType>()
+const phoneRef = ref<IPhoneExposeType>()
+
 
 const handleLoginClick = () => {
-  accountRef.value.loginAction(isKeepCode.value)
+  switch (currentTab.value) {
+    case 'account':
+      // 账号密码登录
+      accountRef.value.loginAction(isKeepCode.value)
+      break
+    case 'phone':
+      // 手机验证码登录
+      phoneRef.value.loginAction()
+      break
+  }
 }
 </script>
 

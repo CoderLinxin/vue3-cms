@@ -50,7 +50,7 @@ defineExpose<IAccountExposeType>({
           // 清除密码缓存
           : (localCache.deleteCache('username'),
             localCache.deleteCache('password'))
-  
+
         // 发送登录请求
         store.dispatch('login/accountLoginAction', {...account})
       }

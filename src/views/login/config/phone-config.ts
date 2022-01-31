@@ -27,3 +27,8 @@ export const rules = {
     },
   ],
 }
+
+// 定义暴露的数据类型
+export interface IPhoneExposeType {
+  loginAction: () => void
+}

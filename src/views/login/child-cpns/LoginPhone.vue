@@ -17,8 +17,18 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
-import { rules } from "../config/phone-config"
+import { defineExpose, reactive } from 'vue'
+import { useStore } from "vuex"
+import { IPhoneExposeType, rules } from "../config/phone-config"
+
+const store = useStore()
+
+// 暴露数据
+defineExpose<IPhoneExposeType>({
+  loginAction() {
+    store.dispatch('login/phoneLoginAction')
+  },
+})
 
 const phone = reactive({
   phoneNum: '',
@@ -28,12 +38,12 @@ const phone = reactive({
 
 <style lang="scss" scoped>
 #login-phone {
-  
-  .verify-code{
+
+  .verify-code {
     display: flex;
     align-items: center;
-    
-    .get-verify-code{
+
+    .get-verify-code {
       margin-left: 10px;
     }
   }

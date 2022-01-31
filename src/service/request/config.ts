@@ -13,7 +13,7 @@ export const {BASE_URL, TIME_OUT} = (function initEnv(env: EnvType) {
       BASE_URL = ''
       break
     case EnvType.dev:
-      BASE_URL = 'http://123.207.32.32:8000'
+      BASE_URL = '/api'
       break
     default:
       const check: never = env

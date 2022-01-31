@@ -1,5 +1,6 @@
 import { BASE_URL, TIME_OUT } from "@/service/request/config"
 import LXRequest from "@/service/request"
+import localCache from "@/utils/cache"
 
 const lxRequest = new LXRequest({
   baseURL: BASE_URL,
@@ -7,7 +8,8 @@ const lxRequest = new LXRequest({
   showLoading: true,
   interceptors: {
     requestInterceptor(config) {
-      const token = 'hello'
+      // 请求前携带 token
+      const token = localCache.getCache('token')
       token && (config.headers!.Authorization = `Bearer ${token}`)
 
       // console.log('axios 实例请求成功时的拦截：', config)

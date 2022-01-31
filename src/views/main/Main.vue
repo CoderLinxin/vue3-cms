@@ -1,20 +1,15 @@
 <template>
   <div id="main">
+    <MainContent/>
   </div>
 </template>
 
 <script lang="ts" setup>
-</script>
-
-<script lang="ts">
-import { defineComponent } from 'vue'  
-
-export default defineComponent({
-  name: 'main'
-})
+import MainContent from './child-cpns/MainContent'
 </script>
 
 <style lang="scss" scoped>
 #main {
+  height: 100%;
 }
 </style>
