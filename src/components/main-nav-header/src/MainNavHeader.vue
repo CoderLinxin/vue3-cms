@@ -10,7 +10,9 @@
     <!--  右边部分  -->
     <div class="header-content">
       <!--   面包屑   -->
-      <div class="crumbs">面包屑</div>
+      <div class="crumbs">
+        <Breadcrumb :crumb-props="crumbProps"/>
+      </div>
 
       <!--  用户管理部分  -->
       <div class="user-admin">
@@ -36,11 +38,24 @@
 
 <script lang="ts" setup>
 import HeaderUserInfo from './HeaderUserInfo'
+import { computed, defineEmits, inject, ref } from "vue"
+import Breadcrumb, { ICrumbType } from "common/breadcrumb"
+import { useStore } from "vuex"
+import { useRoute } from "vue-router"
+import { getCrumbPropsWithCurrentPath } from '@/utils/map-menu'
+import { UserMenusType } from "service/login/types"
 
-import { defineEmits, inject } from "vue"
+// 计算当前菜单路径
+const crumbProps = computed<ICrumbType[]>(() => {
+  const route = useRoute()
+  const store = useStore() // route 改变时计算属性会重新计算
+  return getCrumbPropsWithCurrentPath(
+    store.state.login.userMenus as any as UserMenusType,
+    route.path,
+  )
+})
 
 const emit = defineEmits()
-
 // 通知父组件切换菜单折叠
 const handleFoldClick = () => {
   emit('foldChange')

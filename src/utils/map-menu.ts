@@ -1,5 +1,6 @@
 import { Child, Child2, IUserMenu, UserMenusType } from "service/login/types"
 import type { RouteRecordRaw } from 'vue-router'
+import { ICrumbType } from "common/breadcrumb"
 
 let firstRoute: RouteRecordRaw | undefined = undefined
 
@@ -38,19 +39,38 @@ export default function mapMenuToRoutes(userMenus: UserMenusType): RouteRecordRa
 }
 
 // 根据当前路由路径获取对应的菜单项
-export function getMenuWithPath(userMenus: UserMenusType, currentPath: string): IUserMenu | undefined {
+function getMenuWithPath(
+  userMenus: UserMenusType,
+  currentPath: string,
+  crumbProps?: ICrumbType[],
+): IUserMenu | undefined {
   for (const userMenu of userMenus) {
     if (userMenu.type === 2 && userMenu.url === currentPath) {
-      return userMenu
-    } else if (userMenu.type === 1) {
+      return userMenu // 如果是二级菜单且路径匹配则返回
+    } else if (userMenu.type === 1) { // 否则继续向下递归
       const findMenu = getMenuWithPath(userMenu.children as any as UserMenusType, currentPath)
-      if (findMenu) {
+      if (findMenu) { // 匹配到符合条件的二级菜单
+        // 查找完整的菜单路径
+        crumbProps?.push({name: userMenu.name, path: userMenu.url}) // 二级菜单的父菜单
+        crumbProps?.push({name: findMenu.name, path: findMenu.url})
         return findMenu
       }
     }
   }
 }
 
+// 根据当前路由 path 查找完整的菜单路径,作为面包屑组件的数据来源
+function getCrumbPropsWithCurrentPath(
+  userMenus: UserMenusType,
+  currentPath: string,
+) {
+  const crumbProps: ICrumbType[] = []
+  getMenuWithPath(userMenus, currentPath, crumbProps)
+  return crumbProps
+}
+
 export {
   firstRoute,
+  getMenuWithPath,
+  getCrumbPropsWithCurrentPath,
 }

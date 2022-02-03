@@ -31,6 +31,11 @@ import {
   ElDatePicker,
   ElOption,
   ElSelect,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
+  ElTable,
+  ElTableColumn,
+  ElPagination,
 } from "element-plus/lib/components"
 import {
   UserFilled,
@@ -41,6 +46,11 @@ import {
   ChatDotRound,
   Bell,
   CollectionTag,
+  Refresh,
+  Search,
+  Delete,
+  Edit,
+  RefreshRight,
 } from "@element-plus/icons-vue"
 
 const components = [
@@ -70,6 +80,11 @@ const components = [
   ElOption,
   ElDatePicker,
   ElSelect,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
+  ElTable,
+  ElTableColumn,
+  ElPagination,
 
   UserFilled,
   Iphone,
@@ -79,6 +94,11 @@ const components = [
   ChatDotRound,
   Bell,
   CollectionTag,
+  Refresh,
+  Search,
+  Delete,
+  Edit,
+  RefreshRight,
 ]
 
 const registerElementPlusCpn = {

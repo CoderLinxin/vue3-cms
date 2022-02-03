@@ -61,7 +61,6 @@ provide('isFold', readonly(isFold))
   .main {
     display: flex;
     justify-content: center;
-    height: 673px;
     background-color: #f0f2f5;
     
     .main-content{

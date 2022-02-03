@@ -1,18 +1,15 @@
+<!--  角色管理组件  -->
 <template>
-  <div class="role">
-    <h2>role</h2>
+  <div id="role">
+    <RoleContent/>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'Role',
-  setup() {
-    return {}
-  }
-})
+<script lang="ts" setup>
+import RoleContent from './child-cpns/RoleContent'
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+#role {
+}
+</style>

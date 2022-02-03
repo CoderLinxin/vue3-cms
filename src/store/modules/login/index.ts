@@ -4,7 +4,8 @@ import { IRootState } from "@/store/types"
 import { IAccountLoginPayloadType, ILoginState } from "@/store/modules/login/types"
 import { getUserInfoById, getUserMenuByRoleId, loginRequest } from "service/login"
 import localCache from "@/utils/cache"
-import { IDataType, IUserInfo, UserMenusType } from "service/login/types"
+import type { IDataType } from 'service/types'
+import type { IUserInfo, UserMenusType } from "service/login/types"
 import router from "@/router"
 import mapMenuToRoutes from "@/utils/map-menu"
 

@@ -1,6 +1,7 @@
 import lxRequest from "@/service"
-import { IAccountLoginPayloadType } from "@/store/modules/login/types"
-import { IDataType, ILoginResult } from "service/login/types"
+import type { IAccountLoginPayloadType } from "@/store/modules/login/types"
+import type { IDataType } from "service/types"
+import type { ILoginResult } from "service/login/types"
 
 // 登录接口
 enum LoginApi {
