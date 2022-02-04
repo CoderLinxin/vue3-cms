@@ -1,18 +1,15 @@
+<!--  商品页面  -->
 <template>
-  <div class="goods">
-    <h2>goods</h2>
+  <div id="goods">
+    <GoodsContent/>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'Goods',
-  setup() {
-    return {}
-  }
-})
+<script lang="ts" setup>
+import GoodsContent from './child-cpns/GoodsContent'
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+#goods {
+}
+</style>

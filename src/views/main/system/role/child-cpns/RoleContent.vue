@@ -6,7 +6,8 @@
 
     <!--  中间角色列表组件  -->
     <PageContent :content-config="contentConfig"
-                 :page-name="'role'"/>
+                 :page-name="'role'"
+                 :add-text="'新增角色'"/>
   </div>
 </template>
 

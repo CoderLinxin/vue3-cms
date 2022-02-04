@@ -1,15 +1,18 @@
 import type { Module } from 'vuex'
 import type { IMainStateType, ListMutationsType } from "@/store/modules/main/system/types"
 import type { IRootState } from "@/store/types"
-import type { IPageListPayload, IRoleList, ListUrl, PageNameType } from "service/main/system/types"
-import type { IUserList, IUserListType } from "service/main/system/types"
+import type { IGoods, IPageListPayload, IMenu, ListUrl, PageNameType } from "service/main/system/types"
+import type { IUser, IUserListType } from "service/main/system/types"
 import {
   SET_USERS_LIST,
   SET_USERS_COUNT,
   SET_ROLE_COUNT,
   SET_ROLE_LIST,
+  SET_GOODS_LIST,
+  SET_GOODS_COUNT,
+  SET_MENU_LIST,
 } from "@/store/modules/main/system/mutations-types"
-import { getPageList } from "service/main/system/system"
+import { deletePageData, getPageList } from "service/main/system/system"
 import { IRole } from "service/main/system/types"
 
 const mainModule: Module<IMainStateType, IRootState> = {
@@ -20,6 +23,9 @@ const mainModule: Module<IMainStateType, IRootState> = {
     usersCount: 0,
     roleList: [],
     roleCount: 0,
+    goodsList: [],
+    goodsCount: 0,
+    menuList: [],
   },
 
   getters: {
@@ -31,6 +37,10 @@ const mainModule: Module<IMainStateType, IRootState> = {
             return {listData: state.usersList, listCount: state.usersCount}
           case 'role':
             return {listData: state.roleList, listCount: state.roleCount}
+          case 'goods':
+            return {listData: state.goodsList, listCount: state.goodsCount}
+          case 'menu':
+            return {listData: state.menuList, listCount: undefined}
           default:
             const check: never = pageName
         }
@@ -40,7 +50,7 @@ const mainModule: Module<IMainStateType, IRootState> = {
 
   mutations: {
     // 设置用户列表
-    [SET_USERS_LIST!](state, userList: IUserList[]) {
+    [SET_USERS_LIST!](state, userList: IUser[]) {
       state.usersList = userList
     },
 
@@ -57,6 +67,21 @@ const mainModule: Module<IMainStateType, IRootState> = {
     // 设置角色数
     [SET_ROLE_COUNT!](state, roleCount: number) {
       state.roleCount = roleCount
+    },
+
+    // 设置商品列表
+    [SET_GOODS_LIST!](state, goodsList: IGoods[]) {
+      state.goodsList = goodsList
+    },
+
+    // 设置商品数
+    [SET_GOODS_COUNT!](state, goodsCount: number) {
+      state.goodsCount = goodsCount
+    },
+
+    // 设置菜单列表
+    [SET_MENU_LIST!](state, menuList: IMenu[]) {
+      state.menuList = menuList
     },
   },
 
@@ -79,6 +104,16 @@ const mainModule: Module<IMainStateType, IRootState> = {
           listMutation = 'setRoleList'
           listCountMutation = 'setRoleCount'
           break
+        case 'goods':
+          url = '/goods/list'
+          listMutation = 'setGoodsList'
+          listCountMutation = 'setGoodsCount'
+          break
+        case 'menu':
+          url = '/menu/list'
+          listMutation = 'setMenuList'
+          listCountMutation = undefined
+          break
         default:
           const check: never = pageName
       }
@@ -86,8 +121,23 @@ const mainModule: Module<IMainStateType, IRootState> = {
       // 请求（用户/角色）列表数据
       const result = (await getPageList<IUserListType>(url!, queryInfo)).data
 
-      commit(listMutation!, result.list)
-      commit(listCountMutation!, result.totalCount)
+      listMutation && commit(listMutation, result.list)
+      listCountMutation && commit(listCountMutation, result.totalCount)
+    },
+
+    // 删除一条用户列表数据
+    async deletePageDataAction({dispatch}, {pageName, id}) {
+      const url = `/${pageName}/${id}`
+      await deletePageData(url)
+
+      // 重新请求数据
+      dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10,
+        },
+      })
     },
   },
 }

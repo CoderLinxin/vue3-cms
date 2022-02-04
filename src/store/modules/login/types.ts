@@ -4,7 +4,8 @@ import { IUserInfo, UserMenusType } from "service/login/types"
 export interface ILoginState {
   token?: string,
   userInfo?: IUserInfo,
-  userMenus?: UserMenusType
+  userMenus?: UserMenusType,
+  permissions: string[]
 }
 
 export interface IAccountLoginPayloadType {

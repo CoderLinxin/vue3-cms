@@ -43,16 +43,10 @@ for (const formItem of formItems)
   originalFormData[formItem.field] = ''
 const formData = ref(originalFormData)
 
-const emits = defineEmits(['resetBtnClick','searchBtnClick'])
+const emits = defineEmits(['resetBtnClick', 'searchBtnClick'])
 
 // 重置表单数据
-const handleClearFormData = () => {
-  formData.value = originalFormData
-  // 发射通知子组件重置表单数据
-  emitter.emit('clearFormDataByParent', {...formData.value})
-  // 通知父组件重置网络请求接口数据
-  emits("resetBtnClick")
-}
+const handleClearFormData = () => formData.value = originalFormData
 
 const handlePageSearch = () => {
   // 通知父组件根据搜索条件请求接口数据

@@ -1,18 +1,14 @@
 <template>
-  <div class="menu">
-    <h2>menu</h2>
+  <div id="menu">
+    <MenuContent/>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'Menu',
-  setup() {
-    return {}
-  }
-})
+<script lang="ts" setup>
+import MenuContent from './child-cpns/MenuContent'
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+#menu {
+}
+</style>

@@ -36,6 +36,8 @@ import {
   ElTable,
   ElTableColumn,
   ElPagination,
+  ElImage,
+  ElDialog,
 } from "element-plus/lib/components"
 import {
   UserFilled,
@@ -85,6 +87,8 @@ const components = [
   ElTable,
   ElTableColumn,
   ElPagination,
+  ElImage,
+  ElDialog,
 
   UserFilled,
   Iphone,

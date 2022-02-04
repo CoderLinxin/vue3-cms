@@ -11,8 +11,9 @@ export interface ITablePropsType {
 export interface ITableConfig {
   title?: string,
   listProps: ITablePropsType[],
-  isShowIndexColumn?: Boolean,
-  isShowSelectColumn?: Boolean,
+  isShowIndexColumn?: boolean,
+  isShowSelectColumn?: boolean,
+  isShowFooter?: boolean
 
   [key: string]: any
 }

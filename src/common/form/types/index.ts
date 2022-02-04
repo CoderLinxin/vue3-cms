@@ -17,6 +17,9 @@ export interface IFormItem {
   placeholder?: any, // 占位
   options?: IOptionType[], // select 表单中的 option 配置
   otherOptions?: any // 其他表单元素的配置信息
+  isHidden?:boolean, // 是否显示表单元素
+
+  [key: string]: any
 }
 
 // 承载表单元素的框架类型

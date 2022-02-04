@@ -1,8 +1,8 @@
 // 使用到列表数据的页面名称
-export type PageNameType = 'users' | 'role'
+export type PageNameType = 'users' | 'role' | 'goods' | 'menu'
 
 // 列表数据接口（与 PageNameType 一一对应）
-export type ListUrl = '/users/list' | '/role/list' | undefined
+export type ListUrl = '/users/list' | '/role/list' | '/goods/list' | '/menu/list' | undefined
 
 // 请求（用户/角色）列表数据应携带的 payload
 export interface IPageListPayload {
@@ -11,7 +11,7 @@ export interface IPageListPayload {
 }
 
 // 用户数据模型
-export interface IUserList {
+export interface IUser {
   id: number;
   name: string;
   realname: string;
@@ -25,7 +25,7 @@ export interface IUserList {
 
 // 用户列表接口返回的数据类型
 export interface IUserListType {
-  list: IUserList[];
+  list: IUser[];
   totalCount: number;
 }
 
@@ -74,5 +74,74 @@ export interface IRoleList {
   list: IRole[];
   totalCount: number;
 }
+
+// 商品数据模型
+export interface IGoods {
+  id: number;
+  name: string;
+  oldPrice: string;
+  newPrice: string;
+  desc: string;
+  status: number;
+  imgUrl: string;
+  inventoryCount: number;
+  saleCount: number;
+  favorCount: number;
+  address: string;
+  categoryId: number;
+  createAt: Date;
+  updateAt: Date;
+}
+
+export interface IGoodsList {
+  list: IGoods[];
+  totalCount: number;
+}
+
+
+export interface IMenuChild2 {
+  id: number;
+  url?: any;
+  name: string;
+  sort?: any;
+  type: number;
+  createAt: string;
+  parentId: number;
+  updateAt: string;
+  permission: string;
+}
+
+export interface IMenuChild {
+  id: number;
+  url: string;
+  name: string;
+  sort: number;
+  type: number;
+  children: IMenuChild2[];
+  createAt: string;
+  parentId: number;
+  updateAt: string;
+}
+
+// 菜单数据模型
+export interface IMenu {
+  id: number;
+  name: string;
+  type: number;
+  url: string;
+  icon: string;
+  sort: number;
+  createAt: Date;
+  updateAt: Date;
+  children: IMenuChild[];
+}
+
+export interface IMenuList {
+  list: IMenu[];
+}
+
+
+
+
 
 

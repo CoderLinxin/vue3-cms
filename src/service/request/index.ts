@@ -67,6 +67,10 @@ export default class LXRequest {
   post<T>(config: LXRequestConfig<T>): Promise<T> {
     return this.request<T>({...config, method: 'post'})
   }
+
+  delete<T>(config: LXRequestConfig<T>): Promise<T> {
+    return this.request<T>({...config, method: 'delete'})
+  }
 }
 
 // 设置全局的拦截器

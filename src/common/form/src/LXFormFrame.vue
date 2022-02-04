@@ -13,33 +13,36 @@
         <el-form :label-width="formItem?.labelWidth ?? '100px'"
                  :style="props.formItemStyle">
           <!--   input 输入框   -->
-          <el-form-item :label="formItem?.label"
-                        v-if="formItem?.type === 'input' || formItem?.type === 'password'">
-            <el-input :show-password="formItem?.type === 'password'"
-                      :placeholder="formItem?.placeholder"
-                      v-bind="formItem?.otherOptions"
-                      v-model="formDataProps[`${formItem?.field}`]"/>
-          </el-form-item>
+          <el-form-item :label="formItem?.label" v-if="!formItem.isHidden">
+            <template v-if="formItem?.type === 'input' || formItem?.type === 'password'">
+              <el-input :show-password="formItem?.type === 'password'"
+                        v-if="!formItem.isHidden"
+                        :placeholder="formItem?.placeholder"
+                        v-bind="formItem?.otherOptions"
+                        :model-value="props.modelValue[`${formItem?.field}`]"
+                        @update:model-value="handleUpdateModelValue($event,formItem?.field)"/>
+            </template>
 
-          <!--   picker   -->
-          <el-form-item :label="formItem?.label"
-                        v-else-if="formItem?.type === 'datepicker'">
-            <el-date-picker v-bind="formItem?.otherOptions"
-                            style="width: 100%;"
-                            v-model="formDataProps[`${formItem?.field}`]"/>
-          </el-form-item>
+            <!--   picker   -->
+            <template v-else-if="formItem?.type === 'datepicker'">
+              <el-date-picker v-bind="formItem?.otherOptions"
+                              style="width: 100%;"
+                              :model-value="props.modelValue[`${formItem?.field}`]"
+                              @update:model-value="handleUpdateModelValue($event,formItem?.field)"/>
+            </template>
 
-          <!--   select 选择框   -->
-          <el-form-item :label="formItem?.label"
-                        v-else-if="formItem?.type === 'select'">
-            <el-select :placeholder="formItem?.placeholder"
-                       v-bind="formItem?.otherOptions"
-                       style="width: 100%;"
-                       v-model="formDataProps[`${formItem?.field}`]">
-              <el-option v-for="option in formItem?.options"
-                         :key="option.value"
-                         :value="option.value"/>
-            </el-select>
+            <!--   select 选择框   -->
+            <template v-else-if="formItem?.type === 'select'">
+              <el-select :placeholder="formItem?.placeholder"
+                         v-bind="formItem?.otherOptions"
+                         style="width: 100%;"
+                         :model-value="props.modelValue[`${formItem?.field}`]"
+                         @update:model-value="handleUpdateModelValue($event,formItem?.field)">
+                <el-option v-for="option in formItem?.options"
+                           :key="option.value"
+                           :value="option.value"/>
+              </el-select>
+            </template>
           </el-form-item>
         </el-form>
       </el-col>
@@ -53,10 +56,9 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, PropType, defineEmits, watch, ref, onUnmounted } from "vue"
+import { defineProps, PropType, defineEmits } from "vue"
 import { IFormItem } from "common/form"
-import emitter from '@/utils/bus'
-// {formItems, modelValue, formItemStyle, colLayout}
+
 const props = defineProps({
   // 表单元素列表
   formItems: {
@@ -90,17 +92,12 @@ const props = defineProps({
 })
 
 const emit = defineEmits()
-// 对传递进来的 formData 进行二次包装
-let formDataProps = ref({...props.modelValue})
-// 监听 formDataProps 的改变,然后通知父组件更新 modelValue，而不是去直接修改 modelValue
-watch(formDataProps, (newFormData) => {
-  // 这里需要对 newFormData 进行深拷贝，防止父组件的状态的引用被修改为 formDataProps，这样子组件可以直接修改父组件的内容
-  emit('update:modelValue', {...newFormData})
-}, {deep: true})
 
-// 父组件更新 modelValue 时需手动同步 formDataProps
-emitter.on('clearFormDataByParent', emptyModelValue => formDataProps.value = emptyModelValue as any)
-onUnmounted(() => emitter.off('clearFormDataByParent'))
+// 发射事件通知父组件更新 modelValue
+const handleUpdateModelValue = (newValue, key) => {
+  // 更新对应 key 的值
+  emit('update:modelValue', {...props.modelValue, [key]: newValue})
+}
 </script>
 
 <style lang="scss" scoped>

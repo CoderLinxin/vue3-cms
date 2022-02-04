@@ -62,6 +62,7 @@ export interface Child {
   parentId: number;
 }
 
+// 用户菜单模型
 export interface IUserMenu {
   id: number;
   name: string;
@@ -72,6 +73,5 @@ export interface IUserMenu {
   children: Child[];
 }
 
-// 用户菜单类型
 export type UserMenusType = IUserMenu[]
 

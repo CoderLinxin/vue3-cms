@@ -7,7 +7,7 @@ import localCache from "@/utils/cache"
 import type { IDataType } from 'service/types'
 import type { IUserInfo, UserMenusType } from "service/login/types"
 import router from "@/router"
-import mapMenuToRoutes from "@/utils/map-menu"
+import mapMenuToRoutes, { getUserPermissions } from "@/utils/map-menu"
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -15,6 +15,7 @@ const loginModule: Module<ILoginState, IRootState> = {
     token: undefined,
     userInfo: undefined,
     userMenus: undefined,
+    permissions: [],
   }),
   getters: {},
   mutations: {
@@ -34,6 +35,9 @@ const loginModule: Module<ILoginState, IRootState> = {
       // 根据用户菜单动态添加路由映射
       const routes = mapMenuToRoutes(userMenus)
       routes.forEach(route => router.addRoute('main', route))
+
+      // 获取用户菜单中的所有用户权限
+      state.permissions = getUserPermissions(userMenus)
     },
   },
   actions: {

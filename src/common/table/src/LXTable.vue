@@ -9,7 +9,8 @@
 
     <!--  表格主体部分  -->
     <el-table :data="props.listData" border style="width: 100%"
-              @selection-change="handleSelectionChange">
+              @selection-change="handleSelectionChange"
+              v-bind="props.childrenProps">
       <!--   多选操作列   -->
       <el-table-column v-if="props.isShowSelectColumn"
                        type="selection" width="60" align="center"/>
@@ -21,7 +22,7 @@
 
       <!--   列表主体列   -->
       <template v-for="listProp in props.listProps" :key="listProp.prop">
-        <el-table-column v-bind="listProp" align="center">
+        <el-table-column v-bind="listProp" align="center" show-overflow-tooltip>
           <!--  所有的 listData 都会插入默认插槽(n 个列表项会生成 n 个默认插槽):   -->
           <template #default="scope">
             <!--   使用 listProp.slotName 设置动态插槽名来标识某一列对应的所有插槽,
@@ -38,7 +39,7 @@
     </el-table>
 
     <!--  底部 footer 部分  -->
-    <div class="footer">
+    <div class="footer" v-if="props.isShowFooter">
       <slot name="footer">
         <el-pagination
                 :currentPage="props.page?.currentPage"
@@ -74,7 +75,7 @@ const props = defineProps({
   // 列表数据条数
   listCount: {
     type: Number,
-    required: true,
+    default: () => 0,
   },
 
   // 当前页面和页面大小
@@ -89,6 +90,12 @@ const props = defineProps({
     required: true,
   },
 
+  // 多级菜单展示相关配置
+  childrenProps: {
+    type: Object,
+    default: () => ({}),
+  },
+
   // 是否显示序号列
   isShowIndexColumn: {
     type: Boolean,
@@ -97,6 +104,12 @@ const props = defineProps({
 
   // 是否显示选择列
   isShowSelectColumn: {
+    type: Boolean,
+    default: () => true,
+  },
+
+  // 是否显示翻页器
+  isShowFooter: {
     type: Boolean,
     default: () => true,
   },

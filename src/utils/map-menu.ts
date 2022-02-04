@@ -69,8 +69,26 @@ function getCrumbPropsWithCurrentPath(
   return crumbProps
 }
 
+// 获取用户菜单中拿到所有用户权限（用户权限在三级菜单中）
+function getUserPermissions(userMenus: UserMenusType) {
+  const permission: string[] = []
+
+  const traverUserMenu = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.type === 1 || menu.type === 2)
+        traverUserMenu(menu.children ?? [])
+      else if (menu.type === 3)
+        permission.push((menu as any as Child2).permission)
+    }
+  }
+  traverUserMenu(userMenus)
+
+  return permission
+}
+
 export {
   firstRoute,
   getMenuWithPath,
   getCrumbPropsWithCurrentPath,
+  getUserPermissions,
 }
