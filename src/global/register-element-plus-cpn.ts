@@ -38,6 +38,7 @@ import {
   ElPagination,
   ElImage,
   ElDialog,
+  ElTree,
 } from "element-plus/lib/components"
 import {
   UserFilled,
@@ -89,6 +90,7 @@ const components = [
   ElPagination,
   ElImage,
   ElDialog,
+  ElTree,
 
   UserFilled,
   Iphone,

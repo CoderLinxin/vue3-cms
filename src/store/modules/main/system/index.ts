@@ -3,6 +3,8 @@ import type { IMainStateType, ListMutationsType } from "@/store/modules/main/sys
 import type { IRootState } from "@/store/types"
 import type { IGoods, IPageListPayload, IMenu, ListUrl, PageNameType } from "service/main/system/types"
 import type { IUser, IUserListType } from "service/main/system/types"
+import type { IRole } from "service/main/system/types"
+import { createPageData, editPageData, deletePageData, getPageList } from "service/main/system/system"
 import {
   SET_USERS_LIST,
   SET_USERS_COUNT,
@@ -12,8 +14,6 @@ import {
   SET_GOODS_COUNT,
   SET_MENU_LIST,
 } from "@/store/modules/main/system/mutations-types"
-import { deletePageData, getPageList } from "service/main/system/system"
-import { IRole } from "service/main/system/types"
 
 const mainModule: Module<IMainStateType, IRootState> = {
   namespaced: true,
@@ -135,7 +135,39 @@ const mainModule: Module<IMainStateType, IRootState> = {
         pageName,
         queryInfo: {
           offset: 0,
-          size: 10,
+          size: 99999,
+        },
+      })
+    },
+
+    // 新增一条数据
+    async createPageDataAction({dispatch}, {pageName, newData}) {
+      const url = `/${pageName}`
+
+      // 新增数
+      await createPageData(url, newData)
+
+      // 重新请求数据
+      dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 99999,
+        },
+      })
+    },
+
+    // 编辑一条数据
+    async editPageDataAction({dispatch}, {pageName, editData}) {
+      const url = `/${pageName}/${editData.id}`
+      await editPageData(url, editData)
+
+      // 重新请求数据
+      dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 99999,
         },
       })
     },

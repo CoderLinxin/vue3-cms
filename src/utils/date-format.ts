@@ -8,4 +8,4 @@ const FORMAT_STRING = 'YYYY-MM-DD hh:mm:ss'
 export const formatUTCString = (
   utcString: string,
   formatString: string = FORMAT_STRING,
-) => dayjs.utc(utcString).format(formatString)
+) => dayjs.utc(utcString).utcOffset(8).format(formatString)

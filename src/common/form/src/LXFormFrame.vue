@@ -40,7 +40,9 @@
                          @update:model-value="handleUpdateModelValue($event,formItem?.field)">
                 <el-option v-for="option in formItem?.options"
                            :key="option.value"
-                           :value="option.value"/>
+                           :value="option.value">
+                  {{ option.title }}
+                </el-option>
               </el-select>
             </template>
           </el-form-item>

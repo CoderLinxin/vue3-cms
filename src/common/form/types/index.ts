@@ -9,7 +9,7 @@ interface IOptionType {
 
 // 表单元素类型(根据该类型配置生成一个表单元素)
 export interface IFormItem {
-  type: FormItemType, // 表单元素类型
+  type: FormItemType, // 表单元素类型，用于生成对应的表单元素
   label: string, // 表单元素标签
   labelWidth?: string,
   rules?: any[], // 一些规则

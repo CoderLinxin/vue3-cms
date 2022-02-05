@@ -16,3 +16,19 @@ export function deletePageData(url: string) {
   })
 }
 
+// 新增一条数据
+export function createPageData(url: string, newData: any) {
+  return lxRequest.post({
+    url,
+    data: newData,
+  })
+}
+
+// 编辑一条数据
+export function editPageData(url: string, editData: any) {
+  return lxRequest.patch({
+    url,
+    data: editData,
+  })
+}
+

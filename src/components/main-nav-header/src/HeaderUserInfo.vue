@@ -9,7 +9,7 @@
           </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>退出登录</el-dropdown-item>
+            <el-dropdown-item @click="handleExitClick">退出登录</el-dropdown-item>
             <el-dropdown-item divided>用户信息</el-dropdown-item>
             <el-dropdown-item>系统管理</el-dropdown-item>
           </el-dropdown-menu>
@@ -22,9 +22,18 @@
 <script lang="ts" setup>
 import { computed } from "vue"
 import { useStore } from "vuex"
+import localCache from "@/utils/cache"
+import { useRouter } from "vue-router"
 
 const store = useStore()
 const userInfo = computed(() => store.state.login.userInfo)
+
+const router = useRouter()
+// 退出登录按钮的点击
+const handleExitClick = () => {
+  localCache.deleteCache('token') // 清除 token
+  router.push('/main') // 进行路由跳转（缺少 token 会跳转到登录页）
+}
 </script>
 
 <style lang="scss" scoped>

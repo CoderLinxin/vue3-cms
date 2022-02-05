@@ -136,8 +136,10 @@ export interface IMenu {
   children: IMenuChild[];
 }
 
+// 菜单接口返回的数据类型
 export interface IMenuList {
-  list: IMenu[];
+  list: IMenu[],
+  totalCount: number
 }
 
 

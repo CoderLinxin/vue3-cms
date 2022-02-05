@@ -8,6 +8,7 @@ import type { IDataType } from 'service/types'
 import type { IUserInfo, UserMenusType } from "service/login/types"
 import router from "@/router"
 import mapMenuToRoutes, { getUserPermissions } from "@/utils/map-menu"
+import store from "@/store"
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -45,8 +46,11 @@ const loginModule: Module<ILoginState, IRootState> = {
     async accountLoginAction({commit}, account: IAccountLoginPayloadType) {
       // 1.验证登录
       const {token, id, name} = (await loginRequest(account))?.data
-      commit('setToken', token)
-      localCache.setCache('token', token)
+      if (token) {
+        commit('setToken', token)
+        localCache.setCache('token', token)
+        store?.dispatch('getFullListAction', null, {root: true}) // 加载所有用户角色列表
+      }
 
       // 2.根据用户 id 请求用户的信息（需携带 token）
       const userInfo = (await getUserInfoById<IDataType<IUserInfo>>(id)).data
@@ -64,14 +68,16 @@ const loginModule: Module<ILoginState, IRootState> = {
 
     // 手机验证码登录
     phoneLoginAction({commit}, payload: any) {
-      console.log(11)
       console.log(payload)
     },
 
     // 加载本地用户信息（如果有）
     loadLocalLoginData({commit}) {
       const token = localCache.getCache('token')
-      token && commit('setToken', token)
+      if (token) {
+        commit('setToken', token)
+        store?.dispatch('getFullListAction', null, {root: true}) // 加载所有用户角色列表
+      }
 
       const userInfo = localCache.getCache('userInfo')
       userInfo && commit('setUserInfo', userInfo)
