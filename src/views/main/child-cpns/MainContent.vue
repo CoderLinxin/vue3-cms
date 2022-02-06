@@ -29,6 +29,7 @@
 import { ref, provide, readonly, computed } from "vue"
 import MainNavMenu from 'components/main-nav-menu'
 import MainNavHeader from 'components/main-nav-header'
+import LearnEcharts from '@/test/learn-echarts/基本使用/基本使用'
 
 const isFold = ref(false)
 const getNavWidth = computed(() => !isFold.value ? '210px' : '60px') // 切换折叠菜单时更新导航宽度
@@ -62,8 +63,8 @@ provide('isFold', readonly(isFold))
     display: flex;
     justify-content: center;
     background-color: #f0f2f5;
-    
-    .main-content{
+
+    .main-content {
       width: 100%;
       border-radius: 10px;
       background-color: white;

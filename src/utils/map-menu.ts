@@ -1,6 +1,7 @@
 import { Child, Child2, IUserMenu, UserMenusType } from "service/login/types"
 import type { RouteRecordRaw } from 'vue-router'
-import { ICrumbType } from "common/breadcrumb"
+import type { ICrumbType } from "common/breadcrumb"
+import type { IMenu } from "service/main/system/types"
 
 let firstRoute: RouteRecordRaw | undefined = undefined
 
@@ -84,6 +85,22 @@ function getUserPermissions(userMenus: UserMenusType) {
   traverUserMenu(userMenus)
 
   return permission
+}
+
+// 递归获取所有用户菜单的叶子结点
+export function getMenuLeafKeys(menuList: IMenu[]) {
+  const menuLeafKeys: number[] = []
+
+  const _recursiveGetLeaf = (menuList: IMenu[]) => {
+    for (const menu of menuList) {
+      menu.children
+        ? _recursiveGetLeaf(menu.children as any as IMenu[])
+        : menuLeafKeys.push(menu.id)
+    }
+  }
+  _recursiveGetLeaf(menuList)
+
+  return menuLeafKeys
 }
 
 export {

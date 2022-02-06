@@ -1,18 +1,15 @@
+<!--  商品同同级页面  -->
 <template>
-  <div class="dashboard">
-    <h2>dashboard</h2>
+  <div id="dashboard">
+    <DashboardContent/>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-  name: 'Dashboard',
-  setup() {
-    return {}
-  }
-})
+<script lang="ts" setup>
+import DashboardContent from './child-cpns/DashboardContent'
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+#dashboard {
+}
+</style>

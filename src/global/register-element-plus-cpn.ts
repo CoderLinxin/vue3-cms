@@ -39,6 +39,7 @@ import {
   ElImage,
   ElDialog,
   ElTree,
+  ElCard,
 } from "element-plus/lib/components"
 import {
   UserFilled,
@@ -91,6 +92,7 @@ const components = [
   ElImage,
   ElDialog,
   ElTree,
+  ElCard,
 
   UserFilled,
   Iphone,
